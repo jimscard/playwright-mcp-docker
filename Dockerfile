@@ -28,5 +28,9 @@ RUN mkdir -p /home/playwright/.npm && chown -R playwright:playwright /home/playw
 # Switch to non-root user
 USER playwright
 
+# Add health check to monitor container health
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD pgrep -f "@playwright/mcp" > /dev/null || exit 1
+
 # Set the entrypoint
 ENTRYPOINT ["/app/entrypoint.sh"]
