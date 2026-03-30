@@ -11,10 +11,10 @@ if [ "$HEADLESS" = "true" ]; then
   MCP_ARGS="$MCP_ARGS --headless"
 fi
 
-# Add --port if MCP_PORT is set (for SSE connection)
-# This allows SSE connection even when HEADLESS=true
+# Add --port and --host if MCP_PORT is set (for SSE connection)
+# --host 0.0.0.0 is required so Docker port forwarding can reach the server
 if [ -n "$MCP_PORT" ]; then
-  MCP_ARGS="$MCP_ARGS --port $INTERNAL_PORT"
+  MCP_ARGS="$MCP_ARGS --port $INTERNAL_PORT --host 0.0.0.0"
 fi
 
 # Add --isolated if ISOLATED environment variable is true
